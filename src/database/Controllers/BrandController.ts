@@ -2,6 +2,7 @@ import client from "../client";
 
 import { Request, Response } from "express";
 import selects from "./selects.json";
+import { truncate } from "fs";
 
 export default class BrandController {
     getList = async (req: Request, res: Response) => {
@@ -113,7 +114,34 @@ export default class BrandController {
 
     update = async (req: Request, res: Response) => {
         try {
-            
+            const { name, active } = req.body;
+            const { id_brand } = req.params;
+
+            const brand = await client.brand.update({
+                select: selects.brands,
+                where: {
+                    id: id_brand
+                },
+                data: {
+                    name: name,
+                    active: active
+                }
+            });
+
+            if (brand)
+                return res.status(200).json({
+                    result: brand,
+                    total: 1,
+                    msg: '',
+                    success: truncate
+                });
+
+            return res.status(404).json({
+                result: {},
+                total: 1,
+                msg: 'Brand not found!',
+                success: truncate
+            });
 
         } catch (err) {
             return res.status(500).json({
