@@ -23,7 +23,7 @@ model Products {
 
 model Brand {
   id     String  @id @default(uuid())
-  name   String
+  name   String  @unique
   active Boolean
 
   Products Products[]
