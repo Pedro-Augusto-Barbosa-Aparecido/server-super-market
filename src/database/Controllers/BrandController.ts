@@ -22,6 +22,7 @@ export default class BrandController {
 
             return res.status(200).json({
                 results: brands,
+                total: brands.length,
                 msg: '',
                 success: true
 
@@ -30,6 +31,7 @@ export default class BrandController {
         } catch (err) {
             return res.status(500).json({
                 err: err,
+                total: 0,
                 msg: "",
                 success: false
                 
@@ -57,7 +59,29 @@ export default class BrandController {
 
     get = async (req: Request, res: Response) => {
         try {
-            
+            const { id_brand } = req.params;
+
+            const brand = await client.brand.findUnique({
+                select: selects.brands,
+                where: {
+                    id: id_brand
+                }
+            });
+
+            if (brand) 
+                return res.status(200).json({
+                    result: brand,
+                    total: 1,
+                    msg: '',
+                    success: true
+                });
+
+            return res.status(404).json({
+                result: {},
+                total: 0,
+                msg: 'Brand not Found',
+                success: true
+            })
 
         } catch (err) {
             return res.status(500).json({
