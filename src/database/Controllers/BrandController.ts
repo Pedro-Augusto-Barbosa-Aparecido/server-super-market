@@ -82,7 +82,7 @@ export default class BrandController {
                 total: 0,
                 msg: 'Brand not Found',
                 success: true
-            })
+            });
 
         } catch (err) {
             return res.status(500).json({
@@ -98,7 +98,29 @@ export default class BrandController {
 
     delete = async (req: Request, res: Response) => {
         try {
-            
+            const { id_brand } = req.params;
+
+            const brand = await client.brand.delete({
+                select: selects.brands,
+                where: {
+                    id: id_brand
+                }
+            });
+
+            if (brand) 
+                return res.status(200).json({
+                    result: brand,
+                    total: 1,
+                    msg: '',
+                    success: true
+                });
+
+            return res.status(404).json({
+                result: {},
+                total: 0,
+                msg: 'Brand not Found',
+                success: true
+            });
 
         } catch (err) {
             return res.status(500).json({
