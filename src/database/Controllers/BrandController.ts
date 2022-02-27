@@ -24,7 +24,7 @@ export default class BrandController {
             return res.status(200).json({
                 results: brands,
                 total: brands.length,
-                msg: '',
+                msg: brands.length > 0 ? '' : 'No has data on db.',
                 success: true
 
             });
@@ -44,7 +44,30 @@ export default class BrandController {
 
     create = async (req: Request, res: Response) => {
         try {
-            
+            const { name, active } = req.body;
+
+            const brand = await client.brand.create({
+                select: selects.brands,
+                data: {
+                    name: name,
+                    active: active
+                }
+            });
+
+            if (brand) 
+                return res.status(200).json({
+                    result: brand,
+                    total: 1,
+                    msg: '',
+                    success: true
+                });
+
+            return res.status(404).json({
+                result: {},
+                total: 0,
+                msg: 'Can\'t create brand!',
+                success: true
+            });
 
         } catch (err) {
             return res.status(500).json({
