@@ -7,8 +7,11 @@ import { truncate } from "fs";
 export default class BrandController {
     getList = async (req: Request, res: Response) => {
         try {
-            const { name, active } = req.body;
+            const { name, active, start, limit } = req.body;
+
             const brands = await client.brand.findMany({
+                skip: start || 0,
+                take: limit || Number.MAX_SAFE_INTEGER,
                 where: {
                     name: {
                         contains: name,
