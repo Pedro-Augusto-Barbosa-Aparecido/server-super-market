@@ -1,0 +1,7 @@
+{
+    "brands": {
+        "name": true,
+        "active": true,
+        "id": true
+    }
+}

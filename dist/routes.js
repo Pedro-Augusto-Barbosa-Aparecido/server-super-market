@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const BrandController_1 = __importDefault(require("./database/Controllers/BrandController"));
+const ProductController_1 = __importDefault(require("./database/Controllers/ProductController"));
+const brand = new BrandController_1.default();
+const product = new ProductController_1.default();
+const routes = express_1.default.Router();
+routes.get("/brand/", brand.getList);
+routes.get("/brand/:id_brand", brand.get);
+routes.post("/brand/", brand.create);
+routes.delete("/brand/:id_brand", brand.delete);
+routes.put("/brand/:id_brand", brand.update);
+routes.get("/product/", product.getList);
+routes.get("/product/:id_brand", product.get);
+routes.post("/product/", product.create);
+routes.delete("/product/:id_brand", product.delete);
+routes.put("/product/:id_brand", product.update);
+exports.default = routes;
