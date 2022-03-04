@@ -6,7 +6,7 @@ const brand = new BrandController();
 const product = new ProductController();
 const routes = express.Router();
 
-routes.get("/brand/", brand.getList);
+routes.post("/brand/getList", brand.getList);
 routes.get("/brand/:id_brand", brand.get);
 routes.post("/brand/", brand.create);
 routes.delete("/brand/:id_brand", brand.delete);

@@ -7,8 +7,8 @@ import { truncate } from "fs";
 export default class BrandController {
     getList = async (req: Request, res: Response) => {
         try {
-            const { name, active, start, limit } = req.body;
-
+            const { name, active, start, limit } = req.body.data;
+            console.log(req.body ,req.params)
             const brands = await client.brand.findMany({
                 skip: start || 0,
                 take: limit || Number.MAX_SAFE_INTEGER,
@@ -33,8 +33,9 @@ export default class BrandController {
             });
 
         } catch (err) {
+            console.log(err);
             return res.status(500).json({
-                err: err,
+                err: JSON.stringify(err),
                 total: 0,
                 msg: "",
                 success: false
