@@ -8,7 +8,6 @@ export default class BrandController {
     getList = async (req: Request, res: Response) => {
         try {
             const { name, active, start, limit } = req.body.data;
-            console.log(req.body ,req.params)
             const brands = await client.brand.findMany({
                 skip: start || 0,
                 take: limit || Number.MAX_SAFE_INTEGER,
